@@ -1,11 +1,17 @@
 package br.com.intcode.crosswords.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -25,6 +31,17 @@ public class Question {
 	@Column(name="question_answer", nullable=false)
 	private String answer;
 
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	private User createdBy;
+	
+	@Column(name = "created_at",
+			nullable = false,
+			columnDefinition = "TIMESTAMP NOT NULL DEFAULT NOW()")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
